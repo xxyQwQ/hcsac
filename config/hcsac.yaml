@@ -30,7 +30,7 @@ strategy:
     eval_interval: 10
     sample_episodes: 5
     share_interval: 100
-    rank_percentage: 0.1
+    rank_percentage: 0.05
 
 hydra:
     run:

@@ -45,7 +45,7 @@ You can install them following the instructions below.
     pip install tqdm hydra-core numpy matplotlib
     ```
 
-Latest version is recommended for all the packages, but make sure that your CUDA version is compatible with your `pytorch`.
+Ensure that your CUDA version is compatible with your `pytorch`. Refer to this [link](https://stackoverflow.com/questions/76129688/why-is-pip-install-gym-failing-with-python-setup-py-egg-info-did-not-run-succ) if you encounter errors when installing `gym`.
 
 ## 🚀 Experiments
 
