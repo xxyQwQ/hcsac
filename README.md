@@ -2,7 +2,7 @@
 Multi-Task Offline Reinforcement Learning with Heuristic Conservative Soft Actor-Critic
 </h1>
 <p align="center">
-    Project of AI3601 Reinforcement Learning
+    Project of AI3601 Reinforcement Learning, 2024 Spring, SJTU
     <br />
     <a href="https://github.com/xxyQwQ"><strong>Xiangyuan Xue</strong></a>
     &nbsp;
