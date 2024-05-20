@@ -3,7 +3,7 @@ defaults:
     - override hydra/hydra_logging: none
     - override hydra/job_logging: none
 
-checkpoint: ./checkpoint/csac-${setting.task_name}-${setting.dataset_name}-${seed}
+checkpoint: ./checkpoint/csac-${setting.task_name}-${setting.dataset_name}/seed-${seed}
 device: gpu
 seed: 0
 
