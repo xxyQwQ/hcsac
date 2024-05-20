@@ -1,3 +1,8 @@
+python rsp.py setting.task_name=walk setting.dataset_name=medium # rsp-walk-medium
+python rsp.py setting.task_name=walk setting.dataset_name=medium-replay # rsp-walk-medium-replay
+python rsp.py setting.task_name=run setting.dataset_name=medium # rsp-run-medium
+python rsp.py setting.task_name=run setting.dataset_name=medium-replay # rsp-run-medium-replay
+
 python csac.py setting.task_name=walk setting.dataset_name=medium # csac-walk-medium
 python csac.py setting.task_name=walk setting.dataset_name=medium-replay # csac-walk-medium-replay
 python csac.py setting.task_name=run setting.dataset_name=medium # csac-run-medium

@@ -51,9 +51,9 @@ def main(config):
     torch.manual_seed(config.seed)
 
     task = f'walker_{config.setting.task_name}'
-    environment = make(f'walker_{config.setting.task_name}', seed=config.seed)
+    environment = make(task, seed=config.seed)
     dataset = CSACDataset(
-        f'dataset/walker_{config.setting.task_name}-td3-{config.setting.dataset_name}/data'
+        f'dataset/{task}-td3-{config.setting.dataset_name}/data'
     )
     loader = DataLoader(
         dataset,
