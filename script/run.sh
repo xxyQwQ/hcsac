@@ -1,15 +1,25 @@
-python rsp.py setting.task_name=walk setting.dataset_name=medium # rsp-walk-medium
-python rsp.py setting.task_name=walk setting.dataset_name=medium-replay # rsp-walk-medium-replay
-python rsp.py setting.task_name=run setting.dataset_name=medium # rsp-run-medium
-python rsp.py setting.task_name=run setting.dataset_name=medium-replay # rsp-run-medium-replay
+#!/bin/bash
 
-python csac.py setting.task_name=walk setting.dataset_name=medium # csac-walk-medium
-python csac.py setting.task_name=walk setting.dataset_name=medium-replay # csac-walk-medium-replay
-python csac.py setting.task_name=run setting.dataset_name=medium # csac-run-medium
-python csac.py setting.task_name=run setting.dataset_name=medium-replay # csac-run-medium-replay
+agents=("rsp" "csac" "mtcsac" "hcsac")
+agents=("rsp")
+tasks=("walk" "run")
+datasets=("medium" "medium-replay")
+seeds=(0 1 2 3 4)
 
-python mtcsac.py setting.dataset_name=medium # mtcsac-medium
-python mtcsac.py setting.dataset_name=medium-replay # mtcsac-medium-replay
-
-python hcsac.py setting.dataset_name=medium # hcsac-medium
-python hcsac.py setting.dataset_name=medium-replay # hcsac-medium-replay
+for agent in ${agents[*]}; do
+    if [ $agent == "rsp" ] || [ $agent == "csac" ]; then
+        for task in ${tasks[*]}; do
+            for dataset in ${datasets[*]}; do
+                for seed in {0..4}; do
+                    python $agent.py seed=$seed setting.task_name=$task setting.dataset_name=$dataset
+                done
+            done
+        done
+    else
+        for dataset in ${datasets[*]}; do
+            for seed in {0..4}; do
+                python $agent.py seed=$seed setting.dataset_name=$dataset
+            done
+        done
+    fi
+done
