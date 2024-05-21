@@ -42,7 +42,7 @@ You can install them following the instructions below.
   
     ```bash
     pip install setuptools==65.5.0 gym==0.21.0 dm_control==1.0.15
-    pip install tqdm hydra-core numpy matplotlib
+    pip install tqdm hydra-core numpy pandas seaborn matplotlib 
     ```
 
 Ensure that your CUDA version is compatible with your `pytorch`. Refer to this [link](https://stackoverflow.com/questions/76129688/why-is-pip-install-gym-failing-with-python-setup-py-egg-info-did-not-run-succ) if you encounter errors when installing `gym`.
