@@ -1,13 +1,12 @@
 #!/bin/bash
 
-agents=("rsp" "csac" "mtcsac" "hcsac")
-agents=("rsp")
+agents=("rsp" "bc" "csac" "mtcsac" "hcsac")
 tasks=("walk" "run")
 datasets=("medium" "medium-replay")
 seeds=(0 1 2 3 4)
 
 for agent in ${agents[*]}; do
-    if [ $agent == "rsp" ] || [ $agent == "csac" ]; then
+    if [ $agent == "rsp" ] || [ $agent == "bc" ] || [ $agent == "csac" ]; then
         for task in ${tasks[*]}; do
             for dataset in ${datasets[*]}; do
                 for seed in {0..4}; do

@@ -6,6 +6,28 @@ from tqdm import tqdm
 from torch.utils.data import Dataset
 
 
+class BCDataset(Dataset):
+    def __init__(self, dataset_path):
+        self.buffer = {key: [] for key in ['state', 'action']}
+        path_list = sorted(glob.glob(f'{dataset_path}/*.npz'))
+        for path in path_list:
+            with open(path, 'rb') as file:
+                record = np.load(file)
+                record = {key: record[key] for key in record.keys()}
+                state = record['observation']
+                action = record['action']
+                self.buffer['state'].append(state)
+                self.buffer['action'].append(action)
+        for key in self.buffer.keys():
+            self.buffer[key] = np.concatenate(self.buffer[key], axis=0)
+
+    def __len__(self):
+        return self.buffer['state'].shape[0]
+
+    def __getitem__(self, index):
+        return [self.buffer[key][index] for key in self.buffer.keys()]
+
+
 class CSACDataset(Dataset):
     def __init__(self, dataset_path):
         self.buffer = {key: [] for key in ['state', 'action', 'reward', 'next_state', 'done']}
@@ -143,6 +165,13 @@ class CDSDataset(Dataset):
         for key in self.buffer.keys():
             self.buffer[key] = np.concatenate(self.buffer[key], axis=0)
         return {'Critical Value': values}
+
+
+def bc_collate(batch):
+    state, action = zip(*batch)
+    state = np.stack(state, axis=0)
+    action = np.stack(action, axis=0)
+    return {'state': state, 'action': action}
 
 
 def csac_collate(batch):
