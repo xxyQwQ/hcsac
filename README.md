@@ -52,10 +52,10 @@ First, you need to download the given offline dataset and extract it to the `dat
 Then you can train the agents with default parameters by running the following commands:
 
 ```bash
-python bc.py # Behavioral Cloning
-python csac.py # Conservative Soft Actor-Critic
-python mtcsac.py # Multi-Task Conservative Soft Actor-Critic
-python hcsac.py # Heuristic Conservative Soft Actor-Critic
+python bc.py # behavioral cloning
+python csac.py # conservative soft actor-critic
+python mtcsac.py # multi-task conservative soft actor-critic
+python hcsac.py # heuristic conservative soft actor-critic
 ```
 
 You can specify the task and dataset by modifying the corresponding parameters. For example, to train the HCSAC agent on the `medium-replay` dataset with a batch size of `1024`, you can run the following command:
@@ -84,7 +84,7 @@ Here are the training curves of the agents in the $4$ settings, including `walk-
 Here are the performance comparisons of the agents in terms of the average return in online evaluation:
 
 | Task               | BC             | CSAC           | MTCSAC         | HCSAC          |
-|--------------------|----------------|----------------|----------------|----------------|
+|:------------------:|:--------------:|:--------------:|:--------------:|:--------------:|
 | walk-medium        | 113.96 ± 34.86 | 163.10 ± 21.00 | 170.22 ± 19.61 | 173.41 ± 11.72 |
 | run-medium         | 54.71 ± 7.88   | 77.23 ± 7.11   | 72.46 ± 6.25   | 76.06 ± 5.61   |
 | walk-medium-replay | 136.78 ± 20.96 | 131.73 ± 39.88 | 184.32 ± 20.23 | 158.17 ± 25.72 |
