@@ -3,7 +3,6 @@
 agents=("rsp" "bc" "csac" "mtcsac" "hcsac")
 tasks=("walk" "run")
 datasets=("medium" "medium-replay")
-seeds=(0 1 2 3 4)
 
 for agent in ${agents[*]}; do
     if [ $agent == "rsp" ] || [ $agent == "bc" ] || [ $agent == "csac" ]; then

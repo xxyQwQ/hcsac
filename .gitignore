@@ -1,5 +1,6 @@
 .idea/
 .vscode/
+slurm/
 .note
 
 # Byte-compiled / optimized / DLL files
