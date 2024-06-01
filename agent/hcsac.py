@@ -25,7 +25,7 @@ class HCSACActor(nn.Module):
     def __init__(self, num_tasks, state_dims, action_dims, num_layers=2, hidden_dims=256):
         super(HCSACActor, self).__init__()
         self.embedding = nn.Embedding(num_tasks, state_dims)
-        layers = [nn.Linear(state_dims, hidden_dims), nn.ReLU()]
+        layers = [nn.Linear(2 * state_dims, hidden_dims), nn.ReLU()]
         for _ in range(num_layers - 1):
             layers += [nn.Linear(hidden_dims, hidden_dims), nn.ReLU()]
         self.latent = nn.Sequential(*layers)
@@ -35,7 +35,7 @@ class HCSACActor(nn.Module):
         self.log_sigma_bias = HCSACScaler(-1.0)
 
     def forward(self, task, state, deterministic=False, repeat=None):
-        embedding = state + self.embedding(task)
+        embedding = torch.cat([state, self.embedding(task)], dim=-1)
         if repeat is not None:
             embedding = extend_and_repeat_tensor(embedding, 1, repeat)
         latent = self.latent(embedding)
@@ -48,7 +48,7 @@ class HCSACActor(nn.Module):
         return action, log_prob
 
     def log_prob(self, task, state, action, repeat=None):
-        embedding = state + self.embedding(task)
+        embedding = torch.cat([state, self.embedding(task)], dim=-1)
         if repeat is not None:
             embedding = extend_and_repeat_tensor(embedding, 1, repeat)
         latent = self.latent(embedding)
@@ -64,14 +64,14 @@ class HCSACCritic(nn.Module):
     def __init__(self, num_tasks, state_dims, action_dims, num_layers=2, hidden_dims=256):
         super(HCSACCritic, self).__init__()
         self.embedding = nn.Embedding(num_tasks, state_dims)
-        layers = [nn.Linear(state_dims + action_dims, hidden_dims), nn.ReLU()]
+        layers = [nn.Linear(2 * state_dims + action_dims, hidden_dims), nn.ReLU()]
         for _ in range(num_layers - 1):
             layers += [nn.Linear(hidden_dims, hidden_dims), nn.ReLU()]
         self.latent = nn.Sequential(*layers)
         self.value = nn.Linear(hidden_dims, 1)
 
     def forward(self, task, state, action, repeat=None):
-        embedding = state + self.embedding(task)
+        embedding = torch.cat([state, self.embedding(task)], dim=-1)
         if repeat is not None:
             embedding = extend_and_repeat_tensor(embedding, 1, repeat)
             embedding = embedding.reshape(-1, embedding.shape[-1])
@@ -147,7 +147,7 @@ class HCSACAgent(object):
 
     def take_action(self, task, state):
         with torch.no_grad():
-            action, _ = self.actor(task.unsqueeze(0), state.unsqueeze(0), deterministic=True)
+            action, _ = self.actor(task, state.unsqueeze(0), deterministic=True)
         return action.squeeze(0).detach()
 
     def compute_value(self, task, state, action):

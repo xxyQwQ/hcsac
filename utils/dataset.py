@@ -1,4 +1,5 @@
 import glob
+import random
 
 import torch
 import numpy as np
@@ -14,8 +15,8 @@ class BCDataset(Dataset):
             with open(path, 'rb') as file:
                 record = np.load(file)
                 record = {key: record[key] for key in record.keys()}
-                state = record['observation']
-                action = record['action']
+                state = record['observation'][:-1]
+                action = record['action'][1:]
                 self.buffer['state'].append(state)
                 self.buffer['action'].append(action)
         for key in self.buffer.keys():
@@ -36,13 +37,11 @@ class CSACDataset(Dataset):
             with open(path, 'rb') as file:
                 record = np.load(file)
                 record = {key: record[key] for key in record.keys()}
-                state = record['observation']
-                action = record['action']
-                reward = record['reward']
-                next_state = np.zeros_like(state)
-                next_state[:-1] = state[1:]
+                state = record['observation'][:-1]
+                action = record['action'][1:]
+                reward = record['reward'][1:]
+                next_state = record['observation'][1:]
                 done = np.zeros_like(reward)
-                done[-1] = 1
                 self.buffer['state'].append(state)
                 self.buffer['action'].append(action)
                 self.buffer['reward'].append(reward)
@@ -68,13 +67,11 @@ class MTCSACDataset(Dataset):
                     record = np.load(file)
                     record = {key: record[key] for key in record.keys()}
                     task = np.full(record['observation'].shape[0], task_index, dtype=np.int64)
-                    state = record['observation']
-                    action = record['action']
-                    reward = record['reward']
-                    next_state = np.zeros_like(state)
-                    next_state[:-1] = state[1:]
+                    state = record['observation'][:-1]
+                    action = record['action'][1:]
+                    reward = record['reward'][1:]
+                    next_state = record['observation'][1:]
                     done = np.zeros_like(reward)
-                    done[-1] = 1
                     self.buffer['task'].append(task)
                     self.buffer['state'].append(state)
                     self.buffer['action'].append(action)
@@ -102,13 +99,11 @@ class CDSDataset(Dataset):
                     record = np.load(file)
                     record = {key: record[key] for key in record.keys()}
                     task = np.full(record['observation'].shape[0], task_index, dtype=np.int64)
-                    state = record['observation']
-                    action = record['action']
-                    reward = record['reward']
-                    next_state = np.zeros_like(state)
-                    next_state[:-1] = state[1:]
+                    state = record['observation'][:-1]
+                    action = record['action'][1:]
+                    reward = record['reward'][1:]
+                    next_state = record['observation'][1:]
                     done = np.zeros_like(reward)
-                    done[-1] = 1
                     store['task'].append(task)
                     store['state'].append(state)
                     store['action'].append(action)
