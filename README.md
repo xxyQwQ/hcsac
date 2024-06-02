@@ -58,10 +58,10 @@ python mtcsac.py # multi-task conservative soft actor-critic
 python hcsac.py # heuristic conservative soft actor-critic
 ```
 
-You can specify the task and dataset by modifying the corresponding parameters. For example, to train the HCSAC agent on the `medium-replay` dataset with a batch size of `1024`, you can run the following command:
+You can specify the task and dataset by modifying the corresponding parameters. For example, to train the HCSAC agent on the `medium-replay` dataset with a batch size of $4096$, you can run the following command:
 
 ```bash
-python hcsac.py setting.dataset_name=medium-replay strategy.batch_size=1024
+python hcsac.py setting.dataset_name=medium-replay strategy.batch_size=4096
 ```
 
 You can refer to the `config` folder for more configurations and hyperparameters. We write all the experiment commands in the `script` folder. You can reproduce the results in the report by running the following command:
@@ -83,11 +83,11 @@ Here are the training curves of the agents in the $4$ settings, including `walk-
 
 Here are the performance comparisons of the agents in terms of the average return in online evaluation:
 
-| Task               | BC             | CSAC           | MTCSAC         | HCSAC          |
-|:------------------:|:--------------:|:--------------:|:--------------:|:--------------:|
-| walk-medium        | 113.96 ± 34.86 | 163.10 ± 21.00 | 170.22 ± 19.61 | 173.41 ± 11.72 |
-| run-medium         | 54.71 ± 7.88   | 77.23 ± 7.11   | 72.46 ± 6.25   | 76.06 ± 5.61   |
-| walk-medium-replay | 136.78 ± 20.96 | 131.73 ± 39.88 | 184.32 ± 20.23 | 158.17 ± 25.72 |
-| run-medium-replay  | 54.91 ± 3.39   | 76.65 ± 4.36   | 66.62 ± 11.22  | 69.44 ± 9.14   |
+| Task                 | BC                  | CSAC                | MTCSAC             | HCSAC              |
+|:--------------------:|:-------------------:|:-------------------:|:------------------:|:------------------:|
+| `walk-medium`        | $551.52 \pm 125.24$ | $653.57 \pm 233.83$ | $870.06 \pm 92.99$ | $907.38 \pm 67.39$ |
+| `run-medium`         | $317.26 \pm 9.46$   | $213.67 \pm 49.56$  | $306.16 \pm 20.43$ | $308.38 \pm 7.64$  |
+| `walk-medium-replay` | $829.63 \pm 74.64$  | $812.80 \pm 146.82$ | $931.37 \pm 9.21$  | $927.43 \pm 14.76$ |
+| `run-medium-replay`  | $244.80 \pm 33.35$  | $234.81 \pm 22.11$  | $254.31 \pm 11.60$ | $256.79 \pm 10.13$ |
 
 See the project report for more experiment details and explanations.
